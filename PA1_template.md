@@ -25,7 +25,7 @@ output:
 1. Make a histogram of the total number of steps taken each day
    
    ```r
-    histTotalStepsPerDay<-hist(totalStepsPerDay)
+    histTotalStepsPerDay<-hist(totalStepsPerDay, xlab="Histogram 1")
    ```
    
    ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
@@ -57,7 +57,7 @@ output:
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
    
    ```r
-    plot(names(avgStepsPerInterval), avgStepsPerInterval, type="l", xlab = "Intervals", ylab = "Avg Steps")
+    plot(names(avgStepsPerInterval), avgStepsPerInterval, type="l", xlab = "Intervals - Plot 1", ylab = "Avg Steps")
    ```
    
    ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
@@ -132,7 +132,7 @@ output:
    
    ```r
     totalStepsPerDayNoNA<-tapply(newData$steps, newData$date, sum) 
-    histTotalStepsPerDayNoNA<-hist(totalStepsPerDayNoNA)
+    histTotalStepsPerDayNoNA<-hist(totalStepsPerDayNoNA, xlab="Histogram 2")
    ```
    
    ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
@@ -184,15 +184,15 @@ output:
     newDataWeekday<-newData[newData$w=="weekday",]
     avgStepsPerIntervalWeekend<-tapply(newDataWeekend$steps, newDataWeekend$interval, mean, na.rm=TRUE) 
     avgStepsPerIntervalWeekday<-tapply(newDataWeekday$steps, newDataWeekday$interval, mean, na.rm=TRUE) 
-    plot(names(avgStepsPerIntervalWeekend), avgStepsPerIntervalWeekend, type="l", xlab = "Intervals", ylab = "Avg Steps")
+    plot(names(avgStepsPerIntervalWeekend), avgStepsPerIntervalWeekend, type="l", xlab = "Intervals - Plot 2", ylab = "Avg Steps")
    ```
    
    ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
    
    ```r
-    plot(names(avgStepsPerIntervalWeekday), avgStepsPerIntervalWeekday, type="l", xlab = "Intervals", ylab = "Avg Steps")
+    plot(names(avgStepsPerIntervalWeekday), avgStepsPerIntervalWeekday, type="l", xlab = "Intervals - Plot 3", ylab = "Avg Steps")
    ```
    
    ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-2.png) 
 
-
+  Weekdays starts at 5am, later at weekends, and average are high on weekends. 
