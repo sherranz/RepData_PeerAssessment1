@@ -5,15 +5,18 @@ output:
     keep_md: true
 ---
 
+
 ## Loading and preprocessing the data
-1. Load the data. First of all, the data. I don't know why read.table works better than read.csv with a csv file, do you?
+#### 1. Load the data. 
+First of all, the data. I don't know why read.table works better than read.csv with a csv file, do you?
 
    
    ```r
    data<-read.table("activity.csv", sep = ",", header = TRUE)
    ```
 
-2. Process/transform the data. I tapply by date / by interval
+#### 2. Process/transform the data. 
+I tapply by date / by interval
    
    ```r
     totalStepsPerDay<-tapply(data$steps, data$date, sum) 
@@ -22,16 +25,16 @@ output:
    
 ## What is mean total number of steps taken per day?
 
-1. Make a histogram of the total number of steps taken each day
+#### 1. Make a histogram of the total number of steps taken each day
    
    ```r
     histTotalStepsPerDay<-hist(totalStepsPerDay, xlab="Histogram 1")
    ```
    
-   ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+   ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 
 
-2. Calculate and report the mean and median total number of steps taken per day
+#### 2. Calculate and report the mean and median total number of steps taken per day
    
    ```r
    meanOfStepsPerDay<-mean(totalStepsPerDay, na.rm=TRUE)
@@ -54,14 +57,14 @@ output:
 
 ## What is the average daily activity pattern?
 
-1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+#### 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
    
    ```r
     plot(names(avgStepsPerInterval), avgStepsPerInterval, type="l", xlab = "Intervals - Plot 1", ylab = "Avg Steps")
    ```
    
-   ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
-2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+   ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+#### 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
    
    ```r
     maxStepAvgInterval<-avgStepsPerInterval[avgStepsPerInterval==max(avgStepsPerInterval)]
@@ -76,7 +79,7 @@ output:
 
 
 ## Imputing missing values
-1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+#### 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
    
    ```r
      totalNAs<-sum(is.na(data$steps))
@@ -88,7 +91,7 @@ output:
    ```
    There are  2304 rows with steps = NA
 
-2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+#### 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
   I apply the interval mean on each NA: I need some calculations...
    
@@ -98,7 +101,7 @@ output:
    data$stepsRmNa[is.na(data$steps)]<-0
    data$stepsOK<-is.na(data$steps) * data$avgInt + (!is.na(data$steps)) * data$stepsRmNa
    ```
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in.   
+#### 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.   
 
    
    ```r
@@ -127,7 +130,7 @@ output:
    ##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
    ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
    ```
-4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+#### 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
    
    ```r
@@ -135,7 +138,7 @@ output:
     histTotalStepsPerDayNoNA<-hist(totalStepsPerDayNoNA, xlab="Histogram 2")
    ```
    
-   ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
+   ![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
    
    ```r
    meanOfStepsPerDayNoNA<-mean(totalStepsPerDayNoNA, na.rm=TRUE)
@@ -160,7 +163,7 @@ output:
     
 ## Are there differences in activity patterns between weekdays and weekends?
 
-1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+#### 1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
    
    ```r
     week<-data.frame(n=1:7, s=c("weekend", rep("weekday", 5), "weekend")) #Weekend are days 1 and 7
@@ -177,7 +180,7 @@ output:
    ##  $ wd      : Factor w/ 2 levels "weekday","weekend": 2 2 2 2 2 2 2 2 2 2 ...
    ```
 
-2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+#### 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
    
    ```r
     newDataWeekend<-newData[newData$w=="weekend",]
@@ -187,12 +190,12 @@ output:
     plot(names(avgStepsPerIntervalWeekend), avgStepsPerIntervalWeekend, type="l", xlab = "Intervals - Plot 2", ylab = "Avg Steps")
    ```
    
-   ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
+   ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
    
    ```r
     plot(names(avgStepsPerIntervalWeekday), avgStepsPerIntervalWeekday, type="l", xlab = "Intervals - Plot 3", ylab = "Avg Steps")
    ```
    
-   ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-2.png) 
+   ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-2.png) 
 
   Weekdays starts at 5am, later at weekends, and average are high on weekends. 
